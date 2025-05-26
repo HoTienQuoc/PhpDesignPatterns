@@ -2,7 +2,7 @@ services:
   db: 
     image: mysql:latest
     environment:
-      MYSQL_DATABASE: mydb
+      MYSQL_DATABASE: product_db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: 1

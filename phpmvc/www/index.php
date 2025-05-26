@@ -1,7 +1,7 @@
 <?php
 // Cấu hình kết nối PDO
 $host = 'db';
-$db   = 'mydb';
+$db   = 'product_db';
 $user = 'user';
 $pass = 'password';
 $charset = 'utf8mb4';
@@ -16,11 +16,26 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,                  // dùng chuẩn prepare thực sự
 ];
 
-try {
-    // Tạo đối tượng PDO
-    $pdo = new PDO($dsn, $user, $pass, $options);
-    echo "Kết nối thành công đến MySQL!";
-} catch (\PDOException $e) {
-    // Bắt lỗi kết nối
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
-}
+// Tạo đối tượng PDO
+$pdo = new PDO($dsn, $user, $pass, $options);
+
+$stmt = $pdo->query("SELECT * FROM product");
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Product List</h1>
+    <?php foreach ($products as $product) : ?>
+        <h2><?php echo htmlspecialchars($product['name']); ?></h2>
+        <p><?php echo htmlspecialchars($product['description']); ?></p>
+    <?php endforeach; ?>
+</body>
+</html>
