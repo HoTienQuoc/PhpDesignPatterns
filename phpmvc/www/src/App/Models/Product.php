@@ -1,6 +1,7 @@
 <?php
+namespace App\Models;
 
-class Model{
+class Product{
     public function getData(): array{
         // Cấu hình kết nối PDO
         $host = 'db';
@@ -20,7 +21,7 @@ class Model{
         ];
 
         // Tạo đối tượng PDO
-        $pdo = new PDO($dsn, $user, $pass, $options);
+        $pdo = new \PDO($dsn, $user, $pass, $options);
 
         $stmt = $pdo->query("SELECT * FROM product");
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
