@@ -15,21 +15,10 @@
     $router->add("/{controller}/{action}");
 
 
-    $params = $router->match($path);
-
-    print_r($params);
-
-    if($params === false){
-        exit("No route matched");
-    }
-
-    $action = $params["action"];
-    $controller = "App\Controllers\\".ucwords($params["controller"]);
-
-    $controller_object = new $controller();
-
-    $controller_object->$action();
+   
 
     $dispatcher = new Framework\Dispatcher($router);
+
+    $dispatcher->handle($router);
 
 
