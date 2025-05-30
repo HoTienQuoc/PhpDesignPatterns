@@ -9,10 +9,12 @@ class Products{
         $products = $product->getData();
 
         $viewer = new Viewer();
+        echo $viewer->render("Shared/header.php", ["title"=>"Products"]);
         echo $viewer->render("Products/index.php",["products"=>$products]);
     }
     public function show(string $id){
         $viewer = new Viewer();
+        echo $viewer->render("Shared/header.php", ["title"=>"Products"]);
         echo $viewer->render("Products/show.php",[
             "id"=>$id
         ]);
