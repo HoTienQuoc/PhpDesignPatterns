@@ -9,10 +9,13 @@ class Products{
         $products = $product->getData();
 
         $viewer = new Viewer();
-        echo $viewer->render("product_index.php",["products"=>$products]);
+        echo $viewer->render("Products/index.php",["products"=>$products]);
     }
     public function show(string $id){
-        require_once 'src/views/product_show.php';
+        $viewer = new Viewer();
+        echo $viewer->render("Products/show.php",[
+            "id"=>$id
+        ]);
     }
     public function showPage(string $title, string $id, string $page){
         echo $title, " ", $id, " ", $page;
