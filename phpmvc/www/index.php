@@ -16,10 +16,10 @@
     $router->add("/", ["controller"=>"home", "action"=>"index"]);
     $router->add("/{controller}/{action}");
 
-
+    $container = new Framework\Container;
    
 
-    $dispatcher = new Framework\Dispatcher($router);
+    $dispatcher = new Framework\Dispatcher($router, $container);
 
     $dispatcher->handle($router);
 
