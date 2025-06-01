@@ -4,16 +4,26 @@ namespace App;
 use PDO;
 
 class Database{
-    public function getConnection(){
+    public function __construct(
+        private string $host,
+        private string $db, 
+        private string $user, 
+        private string $pass, 
+        private string $charset
+    ){
+
+    }
+
+    public function getConnection(): PDO{
         // Cấu hình kết nối PDO
-        $host = 'db';
-        $db   = 'product_db';
-        $user = 'user';
-        $pass = 'password';
-        $charset = 'utf8mb4';
+        $this->host = 'db';
+        $this->db   = 'product_db';
+        $this->user = 'user';
+        $this->pass = 'password';
+        $this->charset = 'utf8mb4';
 
         // DSN kết nối PDO MySQL
-        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+        $dsn = "mysql:host=$this->host;dbname=$this->db;charset=$this->charset";
 
         // Tùy chọn PDO
         $options = [
@@ -23,6 +33,6 @@ class Database{
         ];
 
         // Tạo đối tượng PDO
-        return new \PDO($dsn, $user, $pass, $options);
+        return new \PDO($dsn, $this->user, $this->pass, $options);
     }
 }

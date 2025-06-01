@@ -17,6 +17,8 @@ class Dispatcher{
         $action = $this->getActionName($params);
         $controller = $this->getControllerName($params);
 
+        $controller_object = $this->getObject($controller);
+
         $args = $this->getActionArguments($controller, $action, $params);
     
         $controller_object->$action(...$args);
@@ -55,19 +57,21 @@ class Dispatcher{
     }
 
     private function getObject(string $class_name): object{
-        $reflector = new ReflectionClass($controller);
+        $reflector = new ReflectionClass($class_name);
 
         $constructor = $reflector->getConstructor(); 
 
         $dependencies = [];
         
-        if($constructor !== null){
-            foreach($constructor->getParameters() as $parameters){
-                $type = (string) $parameter->getType();
-                $dependencies[] = new $type; 
-            }
+        if($constructor === null){
+            return new $class_name;
+        }
+
+        foreach($constructor->getParameters() as $parameters){
+            $type = (string) $parameter->getType();
+            $dependencies[] =  $this->getObject($type); 
         }
         
-        $controller_object = new $controller(...$dependencies);
+        return new $class_name(...$dependencies);
     }
 }
